@@ -226,7 +226,7 @@
         },
       ];
 
-      const updateInterval = 500; // ms
+      const updateInterval = 5000; // ms
       const apiUrlBase =
         "https://api.bitget.com/api/mix/v1/market/ticker?symbol=";
 
@@ -284,7 +284,7 @@
         ).textContent = `CNY: ¥${totalProfitCny.toFixed(0)}`;
 
         // 更新标题
-        document.title = `总盈利 ¥${totalProfitCny.toFixed(0)}`;
+        document.title = `¥${totalProfitCny.toFixed(0)}`;
       }
 
       // 每 0.5 秒更新一次利润
