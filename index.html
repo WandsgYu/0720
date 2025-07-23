@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
@@ -104,14 +105,14 @@
 
       .total-profit p {
         margin: 0;
-        font-size: 40px; /* 缩小字体 */
+        font-size: 160px; /* 放大两倍 */
         font-weight: bold;
         color: #32cd32;
       }
 
       .converted-profit {
         margin-top: 12px; /* 减小间距 */
-        font-size: 28px; /* 缩小字体 */
+        font-size: 56px; /* 放大两倍 */
         color: #87ceeb;
       }
 
@@ -150,11 +151,11 @@
         }
 
         .total-profit p {
-          font-size: 32px; /* 进一步缩小字体 */
+          font-size: 64px; /* 放大两倍 */
         }
 
         .converted-profit {
-          font-size: 20px; /* 进一步缩小字体 */
+          font-size: 40px; /* 放大两倍 */
         }
       }
     </style>
@@ -193,10 +194,16 @@
         <span class="price" id="solPrice">Price: $0.00</span>
         <p>Profit: Calculating...</p>
       </div>
+      <!-- BGB 利润卡片 -->
+      <div class="card profit-card" id="bgbProfit">
+        <h2>BGB</h2>
+        <span class="price" id="bgbPrice">Price: $0.00</span>
+        <p>Profit: Calculating...</p>
+      </div>
     </div>
 
     <script>
-      const exchangeRate = 7.21; // USD to CNY
+      const exchangeRate = 7.17; // USD to CNY
 
       // 仓位信息
       const positions = [
@@ -224,9 +231,15 @@
           entryPrice: 178.0,
           isShort: false,
         },
+        {
+          symbol: "BGB",
+          size: 100.1,
+          entryPrice: 4.657,
+          isShort: false,
+        },
       ];
 
-      const updateInterval = 5000; // ms
+      const updateInterval = 60000; // ms
       const apiUrlBase =
         "https://api.bitget.com/api/mix/v1/market/ticker?symbol=";
 
@@ -273,6 +286,7 @@
         await updatePositionProfit(positions[1], "eth");
         await updatePositionProfit(positions[2], "bnb");
         await updatePositionProfit(positions[3], "sol");
+        await updatePositionProfit(positions[4], "bgb");
 
         // 更新总利润
         const totalProfitCny = totalProfitUsd * exchangeRate;
