@@ -170,6 +170,13 @@
         </p>
       </div>
 
+      <!-- TRX 利润卡片 -->
+      <div class="card profit-card" id="trxProfit">
+        <h2>TRX</h2>
+        <span class="price" id="trxPrice">Price: $0.00</span>
+        <p>Profit: Calculating...</p>
+      </div>
+
       <!-- BTC 利润卡片 -->
       <div class="card profit-card" id="btcProfit">
         <h2>BTC</h2>
@@ -207,6 +214,12 @@
 
       // 仓位信息
       const positions = [
+      {
+          symbol: "TRX",
+          size: 15000,
+          entryPrice: 0.3161,
+          isShort: false,
+        },
         {
           symbol: "BTC",
           size: 0.0278,
@@ -237,9 +250,10 @@
           entryPrice: 4.657,
           isShort: false,
         },
+        
       ];
 
-      const updateInterval = 6000; // ms
+      const updateInterval = 60000; // ms
       const apiUrlBase =
         "https://api.bitget.com/api/mix/v1/market/ticker?symbol=";
 
@@ -272,9 +286,15 @@
             totalProfitUsd += profit;
 
             // 更新价格和利润显示
-            document.getElementById(
-              `${elementId}Price`
-            ).textContent = `Price: $${currentPrice.toFixed(2)}`;
+            if (elementId === "trx") {
+              document.getElementById(
+                `${elementId}Price`
+              ).textContent = `Price: $${currentPrice.toFixed(4)}`;
+            } else {
+              document.getElementById(
+                `${elementId}Price`
+              ).textContent = `Price: $${currentPrice.toFixed(2)}`;
+            }
             document
               .getElementById(`${elementId}Profit`)
               .querySelector("p").textContent = `Profit: $${profit.toFixed(1)}`;
@@ -282,11 +302,12 @@
         };
 
         // 更新所有仓位
-        await updatePositionProfit(positions[0], "btc");
-        await updatePositionProfit(positions[1], "eth");
-        await updatePositionProfit(positions[2], "bnb");
-        await updatePositionProfit(positions[3], "sol");
-        await updatePositionProfit(positions[4], "bgb");
+        await updatePositionProfit(positions[0], "trx");
+        await updatePositionProfit(positions[1], "btc");
+        await updatePositionProfit(positions[2], "eth");
+        await updatePositionProfit(positions[3], "bnb");
+        await updatePositionProfit(positions[4], "sol");
+        await updatePositionProfit(positions[5], "bgb");
 
         // 更新总利润
         const totalProfitCny = totalProfitUsd * exchangeRate;
